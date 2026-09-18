@@ -1,5 +1,4 @@
 <?php
-
 require_once "connexion.php";
 
 $sql = "SELECT livres.*, auteurs.nom AS auteur, genres.nom AS genre
@@ -7,15 +6,11 @@ $sql = "SELECT livres.*, auteurs.nom AS auteur, genres.nom AS genre
         JOIN auteurs ON livres.auteur_id = auteurs.id
         JOIN genres ON livres.genre_id = genres.id";
 
-$stmt = $pdo->query($sql);
-
-$livres = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
+$livres = $pdo->query($sql)->fetchAll();
 ?>
 
 <!DOCTYPE html>
 <html lang="fr">
-
 <head>
     <meta charset="UTF-8">
     <title>Ma Bibliothèque</title>
@@ -25,57 +20,41 @@ $livres = $stmt->fetchAll(PDO::FETCH_ASSOC);
 <body>
 
 <header>
-
     <h1>📚 Ma Bibliothèque</h1>
 
     <nav>
         <a href="index.php">Livres</a>
         <a href="ajouter.php">Ajouter un livre</a>
     </nav>
-
 </header>
 
 <main>
-
     <h2>Liste des livres</h2>
 
     <div class="livres">
 
         <?php foreach ($livres as $livre): ?>
 
-            <div class="card">
+        <div class="card">
 
-                <?php if (!empty($livre['image'])): ?>
+            <?php if ($livre['image']): ?>
+                <img src="<?= htmlspecialchars($livre['image']) ?>">
+            <?php endif; ?>
 
-                    <img src="<?= htmlspecialchars($livre['image']) ?>">
+            <h3><?= htmlspecialchars($livre['titre']) ?></h3>
 
-                <?php endif; ?>
+            <p>Auteur : <?= htmlspecialchars($livre['auteur']) ?></p>
 
-                <h3>
-                    <?= htmlspecialchars($livre['titre']) ?>
-                </h3>
+            <p>Genre : <?= htmlspecialchars($livre['genre']) ?></p>
 
-                <p>
-                    <strong>Auteur :</strong>
-                    <?= htmlspecialchars($livre['auteur']) ?>
-                </p>
+            <p><?= htmlspecialchars($livre['description']) ?></p>
 
-                <p>
-                    <strong>Genre :</strong>
-                    <?= htmlspecialchars($livre['genre']) ?>
-                </p>
-
-                <p>
-                    <?= htmlspecialchars($livre['description']) ?>
-                </p>
-
-            </div>
+        </div>
 
         <?php endforeach; ?>
 
     </div>
-
 </main>
- 
+
 </body>
 </html>
