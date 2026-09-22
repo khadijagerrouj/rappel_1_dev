@@ -81,6 +81,18 @@ $episodes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         </audio>
                     <?php endif; ?>
 
+                    <div class="actions">
+
+                        <a href="modifier.php?id=<?= $episode['id'] ?>">
+                            Modifier
+                        </a>
+
+                        <a href="supprimer.php?id=<?= $episode['id'] ?>">
+                            Supprimer
+                        </a>
+
+                    </div>
+
                 </div>
 
             </div>
@@ -97,14 +109,3 @@ $episodes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 </body>
 </html>
-<div class="actions">
-
-    <a href="modifier.php?id=<?= $episode['id'] ?>">
-        Modifier
-    </a>
-
-    <a href="supprimer.php?id=<?= $episode['id'] ?>">
-        Supprimer
-    </a>
-
-</div>
